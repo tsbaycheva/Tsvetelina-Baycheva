@@ -1,0 +1,73 @@
+using System;
+using System.Object;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HR_System
+{
+    public class Employee: IEquatable<string>
+    {
+ 
+            public string EmployeeName {get; set;}
+            public string EmployeePosition {get; set;}
+            public string EmployeeWorkplace {get; set;}
+            public string EmployeeEmail {get; set;}
+            public string EmployeePhone {get; set;}
+            public string EmployeeProjectName {get; set;}
+            public string EmployeeManager {get; set;}
+            
+            public override string ToString()
+        {
+            return "Name: " + EmployeeName +   
+                "Position: " + EmployeePosition +  
+                "Workplace: "+ EmployeeWorkplace +  
+                "Email: " + EmployeeEmail +  
+                "Phone: " + EmployeePhone +  
+                "ProjectName: " + EmployeeProjectName + 
+                "Manager: " + EmployeeManager; 
+        }
+            public override bool Equals(object obj)
+            {
+                if (obj == null) return false;
+                string objAsstring = obj as string;
+                if (objAsstring == null) return false;
+                else return Equals(objAsstring);
+            }
+            public override string GetHashCode()
+            {
+                return EmployeeName;
+            }
+            public bool Equals(string other)
+            {
+                if (other == null) return false;
+                return (this.EmployeeName.Equals(other.EmployeeName));
+            }
+        public class Employee
+        {
+            public static void Main()
+            {
+                List<string> Employee = new List<string>();
+                Employee.Add("Asen, Maria, Simona, Ivan, Georgi");
+                Employee.Add("CEO");
+                Employee.Add("Sofia");
+                Employee.Add("mail@gbg.com");
+                Employee.Add("4646");
+                Employee.Add("Project");
+                Employee.Add("none");
+              
+                Employee.Add(new string()
+                {
+                    stringName = "";
+                    EmployeePosition = "";
+                    EmployeeWorkplace = "";
+                    EmployeeEmail = "";
+                    EmployeePhone = "4645";
+                    EmployeeProjectName = "";
+                    EmployeeManager = "";
+                })
+            }
+        }
+    }
+}
