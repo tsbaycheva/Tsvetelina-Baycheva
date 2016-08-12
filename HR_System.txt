@@ -9,7 +9,7 @@ namespace HR_System
     //public class Employee: IEquatable<string>
     //{
  
-    //        public string Employees {get; set;}
+            //public string Employees {get; set;}
             //public string EmployeePosition { get; set; }
             //public string EmployeeWorkplace { get; set; }
             //public string EmployeeEmail { get; set; }
@@ -17,30 +17,15 @@ namespace HR_System
             //public string EmployeeProjectName { get; set; }
             //public string EmployeeManager { get; set; }
 
-     //public override bool Equals(object obj)
-     //       {
-     //           if (obj == null) return false;
-     //           string objAsstring = obj as string;
-     //           if (objAsstring == null) return false;
-     //           else return Equals(objAsstring);
-     //       }
-     //       public override string GetHashCode()
-     //       {
-     //           return Employees;
-     //       }
-     //       public bool Equals(string other)
-     //       {
-     //           if (other == null) return false;
-     //           return (this.Employees.Equals(other.Employees));
-     //       }
 
-            public class Employee 
+                 public class Employee 
         {
             public static void Main()
             {
                 //make an employee list
                 IDictionary<string, string> Employees =
-                    new Dictionary<string, string>();
+                    new Dictionary<string, string>();
+
                 Employees["Asen"] = "4545";
                 Employees["Maria"] = "4546";
                 Employees["Ivan"] = "4547";
@@ -73,9 +58,16 @@ namespace HR_System
                     //enter name for the existing employee
                     Console.Write("\nPlease enter name of the employee: ");
                     string existingEmp = Console.ReadLine();
-                    if (existingEmp == Employees["Maria"])
+                    if (Employees.ContainsKey(existingEmp))
                     {
-                        Console.WriteLine(Employees["Maria"]);
+                        foreach (var item in Employees)
+                        {
+                            if (item.Key.ToString() == existingEmp) 
+                            {
+                            Console.WriteLine("Found " + item.Key + "with value" + item.Value);
+                            }
+                        }
+                        
                     }
                     else
                     {
