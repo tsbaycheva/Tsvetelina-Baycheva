@@ -1,53 +1,65 @@
-<h2 class="text-center">List of exercises and their descriptions</h2><br />
-<p>Here you can find a list of the most important fitness exercises and their descriptions.</p>
-<p>You can also share your experience by <b>adding</b> new exercises, or <b>edit</b> the existing ones, if you think there is a better way to do them.</p>
-<p>You can use delete button to delete some rows, if you need.</p><br />
+(function (angular) {
+    'use strict';
 
-<form class="form-horizontal" ng-submit="add()">
-  <div  class="form-group">
-    <label class="control-label col-sm-2" for="name">Name: </label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" name="name" ng-model="name" required>
-    </div>
-  </div>
-  
-  <div  class="form-group">
-    <label class="control-label col-sm-2" for="description">Description: </label>
-    <div class="col-sm-6">
-      <textarea name="description" class="form-control" rows="3" ng-model="description" required></textarea>
-    </div>
-  </div>
+    angular
+        .module('app')
+        .factory('dictionary', service);
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <input type="submit" value="Submit" class="btn btn-success">
-    </div>
-  </div>
-</form>
+    service.$inject = [];
 
-<div>
-  <table class="table table-hover table-striped">
-    <tr >
-      <th>ID</th>
-      <th>Name</th> 
-      <th>Description</th>
-      <th>Edit</th>
-    </tr>
-    <tr ng-repeat="x in service.data" >
-      <td>{{ $index + 1}}</td>
-      <td ng-if="!x.editMode">{{ x.name }}</td>
-      <td ng-if="!x.editMode">{{ x.description }}</td>
-      <td ng-if="!x.editMode">
-        <input type="button" value="Edit"  class="btn btn-primary" ng-click="service.edit(x)" >
-      <input type="button" value="Delete" class="btn btn-danger" ng-click="service.remove($index)">
-      </td>
+    function service() {
 
-      <td ng-if="x.editMode"><input type="text" ng-model="x.name" /></td>
-        <td ng-if="x.editMode"><input type="text" ng-model="x.description" /></td>
-        <td ng-if="x.editMode">
-            <button class="btn btn-success btn-sm" ng-click="service.save(x)" >Save</button>
-            <button class="btn btn-info btn-sm" ng-click="service.cancel(x)">Cancel</button>
-        </td>
-    </tr>
-  </table>
-</div>
+        var current = {};
+
+        var data = [
+            {
+            'name' : 'Air Bike',
+            'description' : 'Raise your knees up in the air to the extent that your thighs make a right angle with the floor and your calves are exactly parallel to the floor. Start paddling your legs, as if you’re riding a bicycle in the air.'
+                            
+             },
+             {
+            'name' : 'Butt Lift (Bridge)',
+            'description': 'Move your arms out by your sides, away from the body. Position your hands such that your palms are facing upwards. Applying the force from your heels, raise your hips in the upward direction. Keep raising your glutes in the upward direction until your thighs, hips and back are in a straight line.'
+            },
+            {
+            'name' : 'Dumbbell Squat',
+            'description': 'Begin to slowly lower your torso by bending the knees as you maintain a straight posture with the head up. Continue down until your thighs are parallel to the floor. Tip: If you performed the exercise correctly, the front of the knees should make an imaginary straight line with the toes that is perpendicular to the front. If your knees are past that imaginary line (if they are past your toes) then you are placing undue stress on the knee and the exercise has been performed incorrectly. Begin to raise your torso as you exhale by pushing the floor with the heel of your foot mainly as you straighten the legs again and go back to the starting position.'
+            },
+        ]
+
+        return {
+           data: data,
+           add: add,
+           edit: edit,
+           save: save,
+           remove: remove,
+           cancel: cancel,
+           current: current
+        };
+
+        function add(name, description) {
+            data.push({name: name, description: description});
+
+        }
+
+        function edit(x) {
+            current = angular.copy(x);
+            x.editMode = true;
+        };
+
+         function save(x) {
+                x.editMode = false;
+            };
+
+         function remove(index) {
+            data.splice(index, 1);
+        };
+
+         function cancel(x) {
+            x.editMode = false;
+            x.name = current.name;
+            x.description = current.description;
+        }
+    }
+
+}(angular));
