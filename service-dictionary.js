@@ -5,11 +5,13 @@
         .module('app')
         .factory('dictionary', service);
 
-    service.$inject = ['$dictionary'];
+    service.$inject = [];
 
-    function service($dictionary) {
+    function service() {
 
-        var table = {
+        var current = {};
+
+        var table = [
             {
             'name' : 'kljenj',
             'description' : 'kvbejiobneriovbrnvbier'
@@ -22,11 +24,41 @@
             'name' : 'nejvne',
             'description': 'lkvnmoblerkn'
             },
-        }
+        ]
 
         return {
-           getDictionary: table
+           data: table,
+           add: add,
+           edit: edit,
+           save: save,
+           remove: remove,
+           cancel: cancel,
+           current: current
         };
+
+        function add(name, description) {
+            table.push({name: name, description: description});
+
+        }
+
+        function edit(x) {
+            current = angular.copy(x);
+            x.editMode = true;
+        };
+
+         function save(x) {
+                x.editMode = false;
+            };
+
+         function remove(index) {
+            table.splice(index, 1);
+        };
+
+         function cancel(x) {
+            x.editMode = false;
+            x.name = current.name;
+            x.description = current.description;
+        }
     }
 
 }(angular));
