@@ -5,34 +5,16 @@
         .module('app')
         .factory('dictionary', service);
 
-    service.$inject = [];
+    service.$inject = ["$http"];
 
-    function service() {
+    function service($http) {
+
+
+       
 
         var current = {};
 
-        var data = [
-            {
-            'name' : 'Air Bike',
-            'description' : 'Raise your knees up in the air to the extent that your thighs make a right angle with the floor and your calves are exactly parallel to the floor.'+
-            'Start paddling your legs, as if you’re riding a bicycle in the air.'
-                            
-             },
-             {
-            'name' : 'Butt Lift (Bridge)',
-            'description': 'Move your arms out by your sides, away from the body.' +
-            'Position your hands such that your palms are facing upwards. Applying the force from your heels, raise your hips in the upward direction.'+
-            'Keep raising your glutes in the upward direction until your thighs, hips and back are in a straight line.'
-            },
-            {
-            'name' : 'Dumbbell Squat',
-            'description': 'Begin to slowly lower your torso by bending the knees as you maintain a straight posture with the head up. '+
-            'Continue down until your thighs are parallel to the floor. Tip: If you performed the exercise correctly, the front of the knees should make an imaginary straight line' +
-            'with the toes that is perpendicular to the front. If your knees are past that imaginary line (if they are past your toes) then you are placing undue stress on the knee' +
-            'and the exercise has been performed incorrectly. Begin to raise your torso as you exhale by pushing the floor with the heel of your foot mainly as you straighten the legs again' +
-            'and go back to the starting position.'
-            },
-        ]
+        var data = [];
 
         return {
            data: data,
@@ -42,8 +24,29 @@
            remove: remove,
            cancel: cancel,
            current: current,
-           whatIDo: whatIDo
+           whatIDo: whatIDo,
+           get: get
         };
+
+        function get() {
+             return $http({
+                method: 'GET',
+                url: 'http://localhost:3001/dictionary'
+             })
+            .then(function (res) {
+                //console.log(res.data)
+                _.each(res.data, function (d) {
+                    data.push(d);
+                })
+            })
+        }
+
+        function put () {
+            return $http({
+                method: 'PUT',
+                url: 'http://localhost:3001/dictionary'
+             })
+        }
 
         function add(name, description) {
             data.push({name: name, description: description});
@@ -70,7 +73,7 @@
         }
 
         function whatIDo() {
-            return ['Add Exercise', 'Edit Exercise', 'Delete Exercise']
+            return ['Add Exercise', 'Edit Exercise', 'Delete Exercise'];
         }
     }
 
