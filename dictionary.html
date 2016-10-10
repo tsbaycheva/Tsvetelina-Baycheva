@@ -29,8 +29,8 @@
   <table class="table table-hover table-striped">
     <tr >
       <th width="5%">ID</th>
-      <th width="15%">Name</th> 
-      <th width="65%">Description</th>
+      <th width="20%">Name</th> 
+      <th width="60%">Description</th>
       <th width="15%">Edit</th>
     </tr>
     <tr ng-repeat="x in service.data" >
@@ -39,7 +39,7 @@
       <td ng-if="!x.editMode">{{ x.description }}</td>
       <td ng-if="!x.editMode">
         <input type="button" value="Edit"  class="btn btn-primary" ng-click="service.edit(x)" >
-      <input type="button" value="Delete" class="btn btn-danger" ng-click="service.remove($index)">
+        <input type="button" value="Delete" class="btn btn-danger" ng-click="service.remove($index)">
       </td>
 
       <td ng-if="x.editMode"><input type="text" ng-model="x.name" /></td>

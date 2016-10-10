@@ -36,8 +36,10 @@
             dictionary.add($scope.name, $scope.description);
             $scope.name = '';
             $scope.description = '';
+
         }
 
+        dictionary.get()
 
     }
 
