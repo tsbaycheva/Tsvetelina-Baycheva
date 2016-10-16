@@ -7,10 +7,7 @@
 
     service.$inject = ["$http"];
 
-    function service($http) {
-
-
-       
+    function service($http) {       
 
         var current = {};
 
@@ -18,7 +15,7 @@
 
         return {
            data: data,
-           add: add,
+           post: post,
            edit: edit,
            save: save,
            remove: remove,
@@ -41,30 +38,53 @@
             })
         }
 
-        function put () {
+        function post (name, description) {
+            var id = getNewId();
+            data.push({id: id, name: name, description: description});
             return $http({
-                method: 'PUT',
-                url: 'http://localhost:3001/dictionary'
+                method: 'POST',
+                url: 'http://localhost:3001/dictionary',
+                data: {id: id, name: name, description: description}
+               
              })
         }
 
-        function add(name, description) {
-            data.push({name: name, description: description});
+        function getNewId() {
+            var id = 1;
+            if (data.length > 0) {
+                var last = _.last(data);
+                id = parseInt(last.id, 10)  + 1;
+            }
 
+            return id;
         }
+
 
         function edit(x) {
             current = angular.copy(x);
             x.editMode = true;
+            return $http({
+                method: 'PUT',
+                url: 'http://localhost:3001/dictionary:id',
+            })
         };
 
+       
          function save(x) {
                 x.editMode = false;
             };
 
-         function remove(index) {
-            data.splice(index, 1);
+        function remove(id) {
+            data.splice(id, 1);
+            return $http({
+                method: 'DELETE',
+                url: 'http://localhost:3001/dictionary/'+id,
+            })
         };
+
+        // function remove(index) {
+          //  data.splice(index, 1);
+       // };
 
          function cancel(x) {
             x.editMode = false;
