@@ -7,14 +7,20 @@
   <div  class="form-group">
     <label class="control-label col-sm-2" for="name">Name: </label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="name" ng-model="name" required>
+      <input type="text" class="form-control" name="name" ng-model="name" ng-minlength="5" ng-maxlength="30"  required>
+        <div ng-show="form-horizontal.name.$error" ng-messages-include="error-messages">
+          <div ng-show="required">You have to write a name of the exercise!</div>
+          <div ng-show="minlength">The name is too short! You should enter at least 5 symbols!</div>
+          <div ng-show="maxlength">The name is too long!</div>
+        </div>
     </div>
   </div>
   
   <div  class="form-group">
     <label class="control-label col-sm-2" for="description">Description: </label>
     <div class="col-sm-6">
-      <textarea name="description" class="form-control" rows="3" ng-model="description" required></textarea>
+      <textarea name="description" class="form-control" rows="3" ng-model="description" ></textarea>
+      <div ng-show="form-horizontal.description.$touched && form-horizontal.description.$invalid">The name is required.</div>
     </div>
   </div>
 
@@ -34,7 +40,7 @@
       <th width="15%">Edit</th>
     </tr>
     <tr ng-repeat="x in service.data" >
-      <td>{{ $index + 1}}</td>
+      <td>{{ x.id }}</td>
       <td ng-if="!x.editMode">{{ x.name }}</td>
       <td ng-if="!x.editMode">{{ x.description }}</td>
       <td ng-if="!x.editMode">
