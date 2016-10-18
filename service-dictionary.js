@@ -63,28 +63,30 @@
         function edit(x) {
             current = angular.copy(x);
             x.editMode = true;
-            return $http({
-                method: 'PUT',
-                url: 'http://localhost:3001/dictionary:id',
-            })
+            
         };
 
        
          function save(x) {
                 x.editMode = false;
+                $http({
+                    method: 'PUT',
+                    url: 'http://localhost:3001/dictionary/'+x.id,
+                    data: {name: x.name, description: x.description}
+                 })
             };
 
         function remove(id) {
-            data.splice(id, 1);
+            _.each(data, function (val, key) {
+                if (val.id === id) {
+                    data.splice(key, 1);                    
+                };
+            })
             return $http({
                 method: 'DELETE',
                 url: 'http://localhost:3001/dictionary/'+id,
             })
         };
-
-        // function remove(index) {
-          //  data.splice(index, 1);
-       // };
 
          function cancel(x) {
             x.editMode = false;
