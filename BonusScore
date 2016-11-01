@@ -6,3 +6,32 @@
                }   else if (7 < score && score > 9) {  
                 Console.WriteLine(score *1000);
                 } else { Console.WriteLine("Invalid score");}
+                
+                
+                
+                
+
+string card = Console.ReadLine();
+
+switch(card) 
+
+{
+                case "2":
+                    Console.WriteLine("yes " + );
+                break;
+
+                case "3":
+                     Console.WriteLine("yes " + );
+                break;
+                
+                case "4":
+                     Console.WriteLine("yes " + );
+                break;
+
+                default:
+                      Console.WriteLine(“no ” + );
+                break;
+}
+
+
+
